@@ -1,0 +1,57 @@
+# ===== Secrets / credentials =====
+.env
+.env.local
+.env.*.local
+*.pem
+*credentials*
+aws-exports.js
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+*.log
+
+# ===== ML artifacts (large / regeneratable) =====
+ml/data/raw/
+ml/data/processed/
+ml/models/*.pkl
+ml/models/*.joblib
+ml/models/*.bin
+ml/models/*.onnx
+!ml/models/.gitkeep
+*.csv
+!data/README.md
+!**/sample*.csv
+
+# ===== Node / frontend =====
+node_modules/
+frontend/dist/
+frontend/build/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== AWS SAM =====
+.aws-sam/
+samconfig.toml.bak
+packaged.yaml
+
+# ===== OS / editor =====
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# ===== Reports (generated) =====
+reports/results/*.json
+!reports/results/.gitkeep
