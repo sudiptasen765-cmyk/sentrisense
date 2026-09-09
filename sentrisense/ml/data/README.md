@@ -74,48 +74,14 @@ Run `python ml/scripts/inspect_data.py` after both downloads. It checks, for
 each dataset/split:
 
 - row/file counts vs. expected shape
-- duplicate texts (within-split AND cross-split)
+- duplicate texts
 - missing/empty texts
 - class balance
 - word-count distribution (min/max/mean/median)
 
-Results are saved to `reports/results/data_inspection_summary.json`.
-
-### Actual measured results (run on 2026-09-07)
-
-**IMDb:**
-- 50,000 total rows (25,000 train / 25,000 test), perfectly balanced classes
-  in both splits (12,500 / 12,500 each) — no class-imbalance handling needed.
-- 0 missing/empty texts.
-- Word count: min 4, max 2,470, mean 231.2, median 173.0 — wide range; relevant
-  for the DistilBERT comparison model later, which truncates at 512 tokens.
-- Duplicate texts: 418 total — 96 within train, 199 within test,
-  **123 cross-split (train ∩ test)**.
-
-**SST-2:**
-- train: 67,349 rows, moderately imbalanced (37,569 positive / 29,780 negative,
-  ~56/44) — noted for methodology, not severe enough to need resampling.
-- validation: 872 rows, balanced (444 / 428) — used as our generalization
-  check (not `test`, which is unlabeled as noted above).
-- 371 duplicate texts within train (not cross-checked against validation/test
-  since those splits are tiny and this isn't the primary training dataset).
-
-### Decision: IMDb cross-split duplicate handling (data leakage)
-
-123 IMDb reviews are byte-identical between `train` and `test`. This is data
-leakage: a model could effectively memorize a training example and "recognize"
-it verbatim at evaluation time, inflating reported accuracy.
-
-**Decision:** the official `test` split is left **unmodified**, so results
-remain comparable to published IMDb benchmarks using the same split. The 123
-overlapping rows are instead removed from `train` during preprocessing
-(Phase 2, `ml/preprocessing/`). This is implemented, not just documented —
-see `ml/preprocessing/` once Phase 2 begins.
-
-Within-split duplicates (96 in train, 199 in test) are **not** removed — they
-don't cause leakage, only a mild bias toward whatever opinion happens to be
-repeated, which is an accepted characteristic of this dataset and is left
-intact for comparability with prior work using the same corpus.
+Results are saved to `reports/results/data_inspection_summary.json` — this
+file **will** contain real numbers once you run the scripts locally; it does
+not exist yet in this repository.
 
 ## Known considerations for preprocessing (Phase 2)
 

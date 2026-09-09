@@ -7,8 +7,8 @@ external dependency, dataset, or reference is introduced in a phase.
 
 | Resource | URL | Purpose | License / Usage Notes |
 |---|---|---|---|
-| IMDb Large Movie Review Dataset | https://ai.stanford.edu/~amaas/data/sentiment/ | Primary training/eval (binary sentiment) | Free for research use; cite Maas et al. (2011), *Learning Word Vectors for Sentiment Analysis*, ACL. |
-| SST-2 (Stanford Sentiment Treebank) | https://huggingface.co/datasets/stanfordnlp/sst2 | Secondary generalization eval | Research use; see dataset card on Hugging Face for full terms. |
+| IMDb Large Movie Review Dataset | https://ai.stanford.edu/~amaas/data/sentiment/ | Primary training/eval (binary sentiment) | Free for research use. Citation: Maas et al. (2011), *Learning Word Vectors for Sentiment Analysis*, ACL 2011. Full citation and dataset shape in `ml/data/README.md`. |
+| SST-2 (Stanford Sentiment Treebank) | https://huggingface.co/datasets/stanfordnlp/sst2 | Secondary generalization eval | Research use. Citation: Socher et al. (2013), *Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank*, EMNLP 2013. **Public `test` split is unlabeled (GLUE leaderboard placeholder) — use `validation` instead.** Details in `ml/data/README.md`. |
 | Amazon/Yelp/Kaggle review sets (optional domain set) | TBD in Phase 1 | Aspect-based sentiment domain testing | License documented per-source when selected — no scraping; only downloadable, licensed datasets. |
 
 ## AWS Documentation

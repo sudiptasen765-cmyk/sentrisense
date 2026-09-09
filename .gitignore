@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Python build
+build/
+dist/
+*.egg-info/
+
+# ML model files
+*.pth
+*.pt
+*.h5
+*.keras
+*.onnx
+
+# Large datasets
+*.csv
+*.xlsx
+*.zip
+
+# Node
+node_modules/
+
+# Frontend build
+frontend/dist/
+frontend/build/
+
+# Project virtual environment
+sentrisense/.venv/
+
+# Downloaded ML datasets
+sentrisense/ml/data/raw/
+sentrisense/ml/data/processed/
+
+# Node dependencies
+sentrisense/frontend/node_modules/
+
+# Python cache anywhere
+**/__pycache__/
+
+# Temporary files
+*.tmp
+*.temp
