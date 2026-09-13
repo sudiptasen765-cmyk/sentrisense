@@ -4,8 +4,8 @@ Logistic Regression and SVM evaluated on the same held-out `imdb_test.csv`. Dist
 
 | Model | Test Accuracy | Test F1 | Size (MB) | Mean CPU Latency (ms) | Latency measured on |
 |---|---|---|---|---|---|
-| tfidf_logreg | 0.9005 | 0.9004 | 2.049 | 3.014 | local machine (this run) |
-| tfidf_svm | 0.8970 | 0.8967 | 2.049 | 2.813 | local machine (this run) |
+| tfidf_logreg | 0.9005 | 0.9004 | 2.049 | 0.705 | local machine (this run) |
+| tfidf_svm | 0.8970 | 0.8967 | 2.049 | 0.635 | local machine (this run) |
 | distilbert_finetuned | NOT YET MEASURED | NOT YET MEASURED | -- | -- | deferred -- no local GPU |
 
 ## Verdict

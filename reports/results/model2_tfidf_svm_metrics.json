@@ -1,0 +1,208 @@
+{
+  "model_name": "tfidf_svm",
+  "model_version": "v1.0",
+  "vectorizer_reused_from": "ml/models/v1.0/tfidf_vectorizer.joblib (Phase 3, not refit)",
+  "hyperparameter_grid_tested": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    30.0,
+    100.0,
+    300.0
+  ],
+  "selected_hyperparameters": {
+    "C": 1.0,
+    "max_iter": 5000
+  },
+  "tuning_results_all_candidates": [
+    {
+      "C": 0.01,
+      "train_time_s": 0.2,
+      "accuracy": 0.8674,
+      "precision": 0.8519,
+      "recall": 0.8901,
+      "f1": 0.8706,
+      "confusion_matrix": [
+        [
+          1048,
+          193
+        ],
+        [
+          137,
+          1110
+        ]
+      ]
+    },
+    {
+      "C": 0.1,
+      "train_time_s": 0.2,
+      "accuracy": 0.8983,
+      "precision": 0.8944,
+      "recall": 0.9038,
+      "f1": 0.8991,
+      "confusion_matrix": [
+        [
+          1108,
+          133
+        ],
+        [
+          120,
+          1127
+        ]
+      ]
+    },
+    {
+      "C": 1.0,
+      "train_time_s": 0.4,
+      "accuracy": 0.9136,
+      "precision": 0.9108,
+      "recall": 0.9174,
+      "f1": 0.9141,
+      "confusion_matrix": [
+        [
+          1129,
+          112
+        ],
+        [
+          103,
+          1144
+        ]
+      ]
+    },
+    {
+      "C": 10.0,
+      "train_time_s": 1.8,
+      "accuracy": 0.9011,
+      "precision": 0.8982,
+      "recall": 0.9054,
+      "f1": 0.9018,
+      "confusion_matrix": [
+        [
+          1113,
+          128
+        ],
+        [
+          118,
+          1129
+        ]
+      ]
+    },
+    {
+      "C": 30.0,
+      "train_time_s": 3.7,
+      "accuracy": 0.8987,
+      "precision": 0.8964,
+      "recall": 0.9022,
+      "f1": 0.8993,
+      "confusion_matrix": [
+        [
+          1111,
+          130
+        ],
+        [
+          122,
+          1125
+        ]
+      ]
+    },
+    {
+      "C": 100.0,
+      "train_time_s": 9.1,
+      "accuracy": 0.8971,
+      "precision": 0.8936,
+      "recall": 0.9022,
+      "f1": 0.8978,
+      "confusion_matrix": [
+        [
+          1107,
+          134
+        ],
+        [
+          122,
+          1125
+        ]
+      ]
+    },
+    {
+      "C": 300.0,
+      "train_time_s": 21.1,
+      "accuracy": 0.8967,
+      "precision": 0.8929,
+      "recall": 0.9022,
+      "f1": 0.8975,
+      "confusion_matrix": [
+        [
+          1106,
+          135
+        ],
+        [
+          122,
+          1125
+        ]
+      ]
+    }
+  ],
+  "final_validation_metrics": {
+    "accuracy": 0.9136,
+    "precision": 0.9108,
+    "recall": 0.9174,
+    "f1": 0.9141,
+    "confusion_matrix": [
+      [
+        1129,
+        112
+      ],
+      [
+        103,
+        1144
+      ]
+    ]
+  },
+  "inference_latency_val_samples_uncalibrated": {
+    "n_measured": 200,
+    "mean_ms": 0.68,
+    "median_ms": 0.598,
+    "p95_ms": 1.168,
+    "min_ms": 0.419,
+    "max_ms": 1.999
+  },
+  "model_size_mb": {
+    "vectorizer_shared": 1.667,
+    "classifier": 0.382,
+    "total": 2.049
+  },
+  "vectorize_transform_time_s": 7.6,
+  "calibration_separate_step": {
+    "note": "Separate step, added ONLY to supply confidence scores for the API. Its latency/size overhead is documented here and must NOT be substituted for the core (uncalibrated) SVM numbers in the model comparison table.",
+    "calibration_method": "sigmoid",
+    "calibration_cv_folds": 5,
+    "calibration_fit_time_s": 1.7,
+    "validation_metrics": {
+      "accuracy": 0.9148,
+      "precision": 0.915,
+      "recall": 0.915,
+      "f1": 0.915,
+      "confusion_matrix": [
+        [
+          1135,
+          106
+        ],
+        [
+          106,
+          1141
+        ]
+      ]
+    },
+    "inference_latency_with_proba": {
+      "n_measured": 200,
+      "mean_ms": 2.602,
+      "median_ms": 2.52,
+      "p95_ms": 3.165,
+      "min_ms": 2.274,
+      "max_ms": 4.013
+    },
+    "model_size_mb": 1.91
+  },
+  "note": "Evaluated against validation set only. imdb_test.csv was NOT used and remains untouched for final model-comparison evaluation. Uses the exact Phase 3 fitted vectorizer (no refit) for a strict apples-to-apples feature comparison against the Logistic Regression baseline."
+}
