@@ -75,3 +75,5 @@ reports/results/*.json
 # ===== Misc =====
 *.tmp
 *.temp
+# Explicitly allow v1.0 baseline/comparison models (small, intentionally committed)
+!ml/models/v1.0/*.joblib
