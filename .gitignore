@@ -81,3 +81,9 @@ reports/results/*.json
 # Explicitly allow real Phase 4 comparison results (proof of actual measurement)
 !reports/results/final_comparison.json
 !reports/results/model2_tfidf_svm_metrics.json
+
+# Lambda build artifacts (regenerable, not source)
+lambda-package/
+lambda-deployment.zip
+test-event*.json
+response*.json
