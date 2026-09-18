@@ -38,3 +38,12 @@ If you pull this repo fresh and a script fails with a "model not found" error,
 this is why — it's not a bug, the weights are just not meant to live in Git.
 Grab them from the Drive link above before running anything in
 `ml/evaluation/` or `ml/optimization/`.
+
+- `ml/models/distilbert/v1.0_onnx/model_quantized.onnx` (~64 MB) — **this is
+  the recommended deployment artifact from Phase 5** (ONNX int8 quantized,
+  smaller and faster than the raw model above). Download from:
+
+  https://drive.google.com/file/d/1bjX5ymV9QAlQ7GvbOsUePGvZ7F5Xm4e4/view?usp=sharing
+
+  Place it in `ml/models/distilbert/v1.0_onnx/`. This is the file Phase 6/7
+  backend code should actually load — not `model.safetensors`.
