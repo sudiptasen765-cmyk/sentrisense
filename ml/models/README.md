@@ -18,7 +18,7 @@ version-controlled.
   regenerated quickly** (requires GPU fine-tuning, ~10 min on Colab, 11+ hours
   on CPU). Download instead from:
 
-  **[ADD YOUR GOOGLE DRIVE LINK HERE]**
+  https://drive.google.com/file/d/1zo7i1ZlRuP5BMnX6mqa04NLCu7anBAUd/view?usp=drive_link
 
   Place the downloaded `model.safetensors` into `ml/models/distilbert/v1.0/`
   alongside the existing `config.json` / `tokenizer.json` / `tokenizer_config.json`.
