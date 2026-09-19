@@ -1,8 +1,9 @@
 """
 backend/lambda/analyze/handler.py
 
-Lambda entry point for POST /predict. Validates input, runs inference,
-logs the prediction to DynamoDB, returns a structured JSON response.
+Lambda entry point for POST /predict. Validates input, dispatches to the
+requested model (logreg or distilbert, via inference.py), logs the
+prediction to DynamoDB, returns a structured JSON response.
 """
 
 import json
@@ -12,13 +13,14 @@ import uuid
 import logging
 
 import boto3
-from inference import predict_sentiment
+from inference import predict_sentiment, VALID_MODELS
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 PREDICTIONS_TABLE = os.environ["PREDICTIONS_TABLE"]
 MAX_INPUT_LENGTH = int(os.environ.get("MAX_INPUT_LENGTH", "5000"))
+DEFAULT_MODEL = "logreg"
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(PREDICTIONS_TABLE)
@@ -65,8 +67,21 @@ def handler(event, context):
                 f"The 'text' field exceeds the maximum length of {MAX_INPUT_LENGTH} characters.",
             )
 
+        model = payload.get("model", DEFAULT_MODEL)
+        if not isinstance(model, str) or model not in VALID_MODELS:
+            return _error(
+                422,
+                "validation_error",
+                f"The 'model' field must be one of {sorted(VALID_MODELS)}.",
+            )
+
         start = time.perf_counter()
-        result = predict_sentiment(text)
+        try:
+            result = predict_sentiment(text, model=model)
+        except ValueError as exc:
+            # predict_sentiment re-validates model internally; this is a
+            # defensive fallback in case that check is ever bypassed.
+            return _error(422, "validation_error", str(exc))
         latency_ms = round((time.perf_counter() - start) * 1000, 3)
 
         prediction_id = str(uuid.uuid4())
