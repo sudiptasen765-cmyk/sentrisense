@@ -1,17 +1,23 @@
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "ReadModelFromS3",
-      "Effect": "Allow",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::sentrisense-models-935937182823/models/logreg/v1.0/*"
-    },
-    {
-      "Sid": "WritePredictionsToDynamoDB",
-      "Effect": "Allow",
-      "Action": "dynamodb:PutItem",
-      "Resource": "arn:aws:dynamodb:ap-south-1:935937182823:table/SentriSensePredictions"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ReadLogRegModelFromS3",
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::sentrisense-models-935937182823/models/logreg/v1.0/*"
+        },
+        {
+            "Sid": "ReadDistilBertModelFromS3",
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::sentrisense-models-935937182823/models/distilbert/v1.0/*"
+        },
+        {
+            "Sid": "WritePredictionsToDynamoDB",
+            "Effect": "Allow",
+            "Action": "dynamodb:PutItem",
+            "Resource": "arn:aws:dynamodb:ap-south-1:935937182823:table/SentriSensePredictions"
+        }
+    ]
 }
