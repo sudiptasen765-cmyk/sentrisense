@@ -1,0 +1,16 @@
+# backend/lambda/analyze/requirements.txt
+#
+# Runtime-only dependencies for the Lambda container image.
+# Deliberately NOT the full project requirements.txt — training-only
+# packages (torch, transformers' training utilities, datasets, matplotlib,
+# pytest, etc.) would bloat the image and are never used at inference time.
+#
+# transformers is still needed here for its tokenizer (AutoTokenizer),
+# even though the model itself runs via onnxruntime, not torch.
+
+onnxruntime==1.30.0
+transformers>=4.42.4
+scikit-learn==1.7.2
+joblib>=1.4.2
+boto3==1.34.144
+numpy>=1.26.4
