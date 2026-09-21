@@ -4,29 +4,36 @@ export default {
   theme: {
     extend: {
       colors: {
-        sage: {
-          950: "#22302A", // text primary
-          900: "#33473B", // primary dark (headers, nav, primary buttons)
-          700: "#4F7A63", // primary (links, active states, chart series 1)
-          500: "#7FA98F", // secondary (hover states)
-          200: "#DCE5DD", // neutral tint (card backgrounds, dividers)
-          100: "#F8FAF7", // page background
-          muted: "#5C6B62", // muted text
+        ink: {
+          950: "#0B1526", // page background
+          900: "#101F38", // card / surface background
+          800: "#182A47", // elevated surface, hover
+          700: "#24395C", // borders, dividers
+          600: "#33507D", // stronger borders, disabled states
         },
-        accent: {
-          sand: "#C9A876" // used ONLY for negative-sentiment / warning states
-        }
+        parchment: {
+          100: "#F4EFE3", // primary text
+          300: "#C9C2AE", // muted text / secondary
+          500: "#8D8672", // faint text, placeholders
+        },
+        gold: {
+          300: "#E8C468", // hover / lighter accent
+          500: "#C9A227", // primary accent — buttons, links, active states
+          700: "#8C7016", // pressed state, borders on gold elements
+        },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"]
+        display: ["Fraunces", "Georgia", "serif"],
+        sans: ["IBM Plex Sans", "system-ui", "sans-serif"],
+        mono: ["IBM Plex Mono", "ui-monospace", "monospace"],
       },
       borderRadius: {
-        card: "12px"
+        panel: "6px",
       },
-      boxShadow: {
-        card: "0 1px 3px rgba(34, 48, 42, 0.08), 0 1px 2px rgba(34, 48, 42, 0.06)"
-      }
-    }
+      maxWidth: {
+        column: "68ch",
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };
