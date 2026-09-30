@@ -7,6 +7,8 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Cell,
+  LabelList,
 } from "recharts";
 import {
   MODEL_COMPARISON,
@@ -27,6 +29,9 @@ function CustomTooltip({ active, payload }) {
   );
 }
 
+// Distinct color per model so the chart reads clearly without hovering.
+const DOT_COLORS = ["#C9A227", "#7FA98F", "#D9634F"]; // gold, sage, terracotta
+
 export default function Compare() {
   const chartable = MODEL_COMPARISON.filter((m) => m.accuracy != null);
 
@@ -34,15 +39,37 @@ export default function Compare() {
     <div>
       <p className="font-mono text-xs text-gold-500 mb-3">Model comparison</p>
       <h1 className="text-4xl mb-4 leading-tight">The tradeoff, plotted.</h1>
-      <p className="text-parchment-300 max-w-column mb-10">{RESEARCH_QUESTION}</p>
+      <p className="text-parchment-300 max-w-column mb-10">
+        {RESEARCH_QUESTION}
+      </p>
 
       <h2 className="text-xl mb-4">Accuracy vs. latency vs. size</h2>
-      <p className="text-sm text-parchment-500 mb-4 font-mono">
+      <p className="text-sm text-parchment-500 mb-2 font-mono">
         bubble size = model size on disk (MB)
       </p>
-      <div className="border border-ink-700 rounded-panel bg-ink-900 p-4 mb-4" style={{ height: 360 }}>
+
+      {/* Legend so colors are unambiguous even if labels overlap on the chart */}
+      <div className="flex flex-wrap gap-4 mb-4">
+        {chartable.map((m, i) => (
+          <div
+            key={m.id ?? i}
+            className="flex items-center gap-2 text-xs font-mono text-parchment-300"
+          >
+            <span
+              className="inline-block w-3 h-3 rounded-full"
+              style={{ backgroundColor: DOT_COLORS[i % DOT_COLORS.length] }}
+            />
+            {m.name}
+          </div>
+        ))}
+      </div>
+
+      <div
+        className="border border-ink-700 rounded-panel bg-ink-900 p-4 mb-4"
+        style={{ height: 360 }}
+      >
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 10, right: 20, bottom: 10, left: 0 }}>
+          <ScatterChart margin={{ top: 30, right: 20, bottom: 10, left: 0 }}>
             <CartesianGrid stroke="#24395C" strokeDasharray="3 3" />
             <XAxis
               type="number"
@@ -51,9 +78,19 @@ export default function Compare() {
               unit="ms"
               scale="log"
               domain={["auto", "auto"]}
-              tick={{ fill: "#C9C2AE", fontSize: 11, fontFamily: "IBM Plex Mono" }}
+              tick={{
+                fill: "#C9C2AE",
+                fontSize: 11,
+                fontFamily: "IBM Plex Mono",
+              }}
               stroke="#24395C"
-              label={{ value: "Mean CPU latency (ms, log scale)", position: "insideBottom", offset: -5, fill: "#8D8672", fontSize: 11 }}
+              label={{
+                value: "Mean CPU latency (ms, log scale)",
+                position: "insideBottom",
+                offset: -5,
+                fill: "#8D8672",
+                fontSize: 11,
+              }}
             />
             <YAxis
               type="number"
@@ -61,13 +98,43 @@ export default function Compare() {
               name="accuracy"
               unit="%"
               domain={[85, 95]}
-              tick={{ fill: "#C9C2AE", fontSize: 11, fontFamily: "IBM Plex Mono" }}
+              tick={{
+                fill: "#C9C2AE",
+                fontSize: 11,
+                fontFamily: "IBM Plex Mono",
+              }}
               stroke="#24395C"
-              label={{ value: "Test accuracy (%)", angle: -90, position: "insideLeft", fill: "#8D8672", fontSize: 11 }}
+              label={{
+                value: "Test accuracy (%)",
+                angle: -90,
+                position: "insideLeft",
+                fill: "#8D8672",
+                fontSize: 11,
+              }}
             />
             <ZAxis type="number" dataKey="sizeMb" range={[80, 700]} />
-            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#C9A227", strokeWidth: 1 }} />
-            <Scatter data={chartable} fill="#C9A227" fillOpacity={0.75} />
+            <Tooltip
+              content={<CustomTooltip />}
+              cursor={{ stroke: "#C9A227", strokeWidth: 1 }}
+            />
+            <Scatter data={chartable} fillOpacity={0.85}>
+              {chartable.map((entry, i) => (
+                <Cell
+                  key={entry.id ?? i}
+                  fill={DOT_COLORS[i % DOT_COLORS.length]}
+                />
+              ))}
+              <LabelList
+                dataKey="name"
+                position="top"
+                offset={14}
+                style={{
+                  fontFamily: "IBM Plex Mono",
+                  fontSize: 11,
+                  fill: "#C9C2AE",
+                }}
+              />
+            </Scatter>
           </ScatterChart>
         </ResponsiveContainer>
       </div>
@@ -92,7 +159,9 @@ export default function Compare() {
                   <div className="font-sans">{m.name}</div>
                   <div className="text-xs text-parchment-500">{m.role}</div>
                 </td>
-                <td className="px-4 py-3">{m.accuracy != null ? `${m.accuracy}%` : "—"}</td>
+                <td className="px-4 py-3">
+                  {m.accuracy != null ? `${m.accuracy}%` : "—"}
+                </td>
                 <td className="px-4 py-3">{m.f1 != null ? `${m.f1}%` : "—"}</td>
                 <td className="px-4 py-3">{m.sizeMb} MB</td>
                 <td className="px-4 py-3">{m.latencyMs} ms</td>
@@ -111,8 +180,8 @@ export default function Compare() {
 
       <h2 className="text-xl mb-4">Phase 5 — optimization results</h2>
       <p className="text-sm text-parchment-300 mb-4 max-w-column">
-        Two optimizations were tested against the original fine-tuned DistilBERT model.
-        Only one was adopted for deployment.
+        Two optimizations were tested against the original fine-tuned DistilBERT
+        model. Only one was adopted for deployment.
       </p>
       <div className="overflow-x-auto border border-ink-700 rounded-panel">
         <table className="w-full text-sm font-mono">
@@ -127,13 +196,25 @@ export default function Compare() {
           </thead>
           <tbody>
             {OPTIMIZATION_RESULTS.map((o) => (
-              <tr key={o.name} className="border-b border-ink-700 last:border-0">
-                <td className="px-4 py-3 text-parchment-100 font-sans">{o.name}</td>
-                <td className="px-4 py-3">{o.f1Delta > 0 ? "+" : ""}{o.f1Delta}%</td>
+              <tr
+                key={o.name}
+                className="border-b border-ink-700 last:border-0"
+              >
+                <td className="px-4 py-3 text-parchment-100 font-sans">
+                  {o.name}
+                </td>
+                <td className="px-4 py-3">
+                  {o.f1Delta > 0 ? "+" : ""}
+                  {o.f1Delta}%
+                </td>
                 <td className="px-4 py-3">{o.sizeReductionPct}%</td>
                 <td className="px-4 py-3">{o.speedup}x</td>
                 <td className="px-4 py-3">
-                  <span className={o.adopted ? "text-gold-500" : "text-parchment-500"}>
+                  <span
+                    className={
+                      o.adopted ? "text-gold-500" : "text-parchment-500"
+                    }
+                  >
                     {o.verdict}
                   </span>
                 </td>
